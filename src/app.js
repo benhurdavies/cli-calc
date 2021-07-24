@@ -20,10 +20,7 @@ function printResponse(val) {
 (async function loop() {
   process.stdout.write('> ');
   const exprStr = (await lineIt.next()).value;
-  if (exprStr.toLowerCase() === 'exit') {
-    rlClose();
-    return;
-  }
+  if (exprStr.toLowerCase() === 'exit') return rlClose();
 
   const exprBuilder = new ExpressionBuilder(exprStr);
   try {

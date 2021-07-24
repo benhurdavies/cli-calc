@@ -36,4 +36,11 @@ describe('expression builder', () => {
     const expr = builder.getExpression();
     expect(expr.evaluate()).toEqual(Infinity);
   });
+
+  it('should follow Bodmas rule', () => {
+    expect(new ExprBuilder('2-1+4').getExpression().evaluate()).toBe(2 - 1 + 4);
+    expect(new ExprBuilder('8/4*3').getExpression().evaluate()).toBe((8 / 4) * 3);
+    expect(new ExprBuilder('8/4*3').getExpression().evaluate()).toBe((8 / 4) * 3);
+    expect(new ExprBuilder('2+6-4*2/4').getExpression().evaluate()).toBe(2 + 6 - (4 * 2) / 4);
+  });
 });

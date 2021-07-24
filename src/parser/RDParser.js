@@ -16,17 +16,18 @@ class RDParser extends Lexer {
     return this.expr();
   }
 
-  /* grammar
-  <Expr> ::= <Term> | Term { + | - } <Expr>
-  <Term> ::= <Factor> | <Factor> {*|/} <Term>
-  <Factor>::= <number> | ( <expr> ) | {+|-} <factor>
-  */
+  /**
+   * Grammar
+   * EXPRESSION = TERM { "+" | "-" TERM }
+   * TERM = FACTOR { "*" | "/" FACTOR }
+   * FACTOR = NUMBER | ( EXPRESSION ) | {+|-} FACTOR
+   */
   expr() {
     let retValue = this.term();
     while (this.currentToken === tokens.PLUS || this.currentToken === tokens.SUB) {
       const lastToken = this.currentToken;
       this.currentToken = this.getToken();
-      const exp1 = this.expr();
+      const exp1 = this.term();
       retValue = new BinaryExp(retValue, exp1, lastToken === tokens.PLUS ? operator.PLUS : operator.MINUS);
     }
     return retValue;
@@ -37,7 +38,7 @@ class RDParser extends Lexer {
     while (this.currentToken === tokens.MUL || this.currentToken === tokens.DIV) {
       const lastToken = this.currentToken;
       this.currentToken = this.getToken();
-      const exp1 = this.term();
+      const exp1 = this.factor();
       retValue = new BinaryExp(retValue, exp1, lastToken === tokens.MUL ? operator.MUL : operator.DIV);
     }
     return retValue;
