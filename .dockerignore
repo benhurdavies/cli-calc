@@ -1,0 +1,9 @@
+README.md
+node_modules
+report
+.git
+.dockerignore
+.editorconfig
+.gitignore
+docker-compose.yml
+Dockerfile

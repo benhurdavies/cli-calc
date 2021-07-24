@@ -1,0 +1,7 @@
+version: "3.7"
+services:
+  calc:
+    build: .
+    image: 'cli-calc'
+    volumes:
+      - .:/app
